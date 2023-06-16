@@ -1,0 +1,572 @@
+<div class="container mt-5">
+
+  <h2 class="fw-bold fs-4 py-4 text-dark text-center has-background-info-light text-black font-bold ">
+    <img class="fas fa-spin" src="./assets/favicon.ico" alt="Logo" width="35" height="30"> Task Manager
+    <img class="fas fa-spin" src="./assets/favicon.ico" alt="Logo" width="35" height="30">
+  </h2>
+
+  <!-- Selection -->
+  <div class="d-flex align-items-start">
+
+    <a (click)="Home()" class="navbar-brand mx-3 text-dark fw-bold d-inline-block align-text-top" type="button"
+      aria-label="Example icon-button with share icon">
+      <img src="./assets/home.png" alt="Logo" width="40" height="40">
+    </a>
+    <div class="col-6 px-4">
+      <mat-form-field>
+        <mat-label class="fw-bold text-dark font-bold ">Select a status</mat-label>
+        <mat-select class="fw-bold text-dark font-bold " [(ngModel)]="select" (selectionChange)="filterChanged($event)">
+          <mat-option class="fw-bold  has-background-dark text-light font-bold " value="ALL">All</mat-option>
+          <mat-option class="fw-bold  has-background-link text-dark font-bold " value="URGENT">Urgent</mat-option>
+          <mat-option class="fw-bold  has-background-primary text-dark font-bold " value="IMP">Important</mat-option>
+          <mat-option class="fw-bold  has-background-info text-dark font-bold " value="TODAY">Today</mat-option>
+          <mat-option class="fw-bold  has-background-danger text-dark font-bold " value="UI">Urgent &
+            Important</mat-option>
+          <mat-option class="fw-bold  has-background-warning text-dark font-bold " value="NIL">Nothing</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Search Bar -->
+    <div>
+      <mat-form-field>
+        <mat-label class="fw-bold text-dark font-bold">Search </mat-label>
+        <input matInput placeholder="" search [(ngModel)]="searchText" (keyup)="Search($event)" #input />
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <!-- <div class="mb-3">
+    <mat-label class="fw-bold text-dark mr-3 font-bold">Tag</mat-label>
+    <select type="text" class="fw-normal text-dark font-bold" matInput placeholder="tag" name="tag"
+      [(ngModel)]="formValues.tag">
+      <option> Important </option>
+      <option> Urgent </option>
+      <option> Important & Urgent </option>
+      <option> Today </option>
+      <option> Nothing </option>
+    </select>
+  </div> -->
+
+  <!-- Non-completed Todos  -->
+  <div *ngIf="code == -1" class="row mt-5">
+    <div class="col-12">
+      <h3 class=" button fw-bold text-dark font-bold is-info bg-info bg-gradient "> Non-completed Todos
+        <span class="icon mx-1 fs-5 text-dark is-small">
+          <img src="./assets/error.png" class="fas fa-spin" alt="Logo" width="20" height="20"
+            style="--fa-animation-duration: 20s;">
+        </span>
+      </h3>
+      <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8 {{action}} demo-table">
+        <ng-container matColumnDef="title">
+          <th class="has-background-dark pt-4 fw-bold font-bold has-text-success " mat-header-cell *matHeaderCellDef>
+            Title</th>
+          <td class=" {{color1}} fw-bold text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">{{element.title}}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>
+            Description</th>
+          <td class="{{color1}} fw-bold text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">
+            <!-- {{element.description}} -->
+            <span *ngIf="element.description.length <= msg "> {{element.description}} </span>
+            <span class="d-flex flex-row " *ngIf="element.description.length > msg">
+              {{element.description.substring(0,msg)}}...
+              <img (click)="openMsg(element.description)" src="./assets/msg.png"
+                class="mat-checkbox pb-4 has-text-dark fs-2 fw-bold font-bold" alt="Logo" width="22" height="20">
+            </span>
+          </td>
+        </ng-container>
+
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="start">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Start Date
+          </th>
+          <td class="{{color1}} fw-bold text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">{{element.start}}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="isCompleted">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Task Status
+          </th>
+          <td class="{{color1}} fw-bold {{Task(element)}}  pt-4 font-bold" mat-cell *matCellDef="let element">
+            <span class="{{col}} font-bold" mat-button mat-dialog-close>
+              {{task_status}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Extra Column -->
+        <ng-container matColumnDef="due">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Due Date
+          </th>
+          <td class="fw-bold {{color1}} text-dark {{onTag(element)}}  pt-4 font-bold" mat-cell
+            *matCellDef="let element">{{element.due}}
+          </td>
+        </ng-container>
+
+        <!-- Extra Column -->
+        <ng-container matColumnDef="tag">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Tag</th>
+          <td class="fw-bold  {{color1}} {{tagcolor}}   pt-4 font-bold" mat-cell *matCellDef="let element">
+            {{element.tag}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th class="fw-bold has-background-dark pt-4  text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Status</th>
+          <td class="fw-bold {{color1}} text-success fs-4 pt-4  font-bold" mat-cell *matCellDef="let element">
+            <img *ngIf="!element.isCompleted && !element.progress" src="./assets/error.png" alt="Logo" width="20"
+              height="20">
+            <mat-icon *ngIf="element.isCompleted && !element.progress" class="mr-4"> check_circle </mat-icon>
+            <span *ngIf="element.progress && !element.isCompleted" class="icon has-text-link-dark mr-4 is-small">
+              <i class="fas fa-cog fa-spin"></i>
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Mark Tag -->
+        <ng-container matColumnDef="mark">
+          <th class="fw-bold has-background-dark pt-4  text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Mark</th>
+          <td class="fw-bold {{color1}} text-success fs-6 pt-4  font-bold" mat-cell *matCellDef="let element">
+            <mat-checkbox [(ngModel)]="element.isCompleted" color="primary" class="fw-bold text-dark font-bold"
+              (click)="element.isCompleted = !element.isCompleted && check(element)" name="Mark">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-button (click)="openAddDialog()" [color]="'primary'">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index">
+            <button mat-button [color]="'dark'" (click)="openUpdateDialog(row, false)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button [color]="'warn'" (click)="openDeleteDialog(row)">
+              <mat-icon class="mr-4">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Show this message if No Data Found By Search Bar -->
+        <tr *matNoDataRow>
+          <td *ngIf="noncomp" class="mat-cell mt-6 fw-normal fs-6 py-2 text-center has-background-grey-lighter"
+            colspan="10">
+            No results found for this text - {{input.value}}
+          </td>
+        </tr>
+
+      </table>
+
+      <div *ngIf="noncomp == 0" class="mt-6 text-center has-background-grey-lighter">
+        <h3 class="fw-bold py-2 text-danger fs-4 font-bold "> Todo List - Empty</h3>
+      </div>
+
+    </div>
+
+
+    <!-- Completed Todos -->
+    <div *ngIf="code == -1" class=" col-12 mt-5">
+      <h3 class="button fw-bold text-dark is-success has-background-success bg-gradient font-bold">Completed Todos
+        <span class="icon mx-1 fs-5 text-dark is-small">
+          <i class="fas fa-check-circle fa-spin" style="--fa-animation-duration: 20s;"></i>
+        </span>
+      </h3>
+      <table mat-table [dataSource]="dataSource1" class="  mat-elevation-z8 {{action}} demo-table">
+        <ng-container matColumnDef="title">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Title</th>
+          <td class="fw-bold {{color2}} text-dark pt-4  font-bold" mat-cell *matCellDef="let element">{{element.title}}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Description
+          </th>
+          <td class="fw-bold {{color2}} text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">
+            <!-- {{element.description}} -->
+            <span *ngIf="element.description.length <= msg "> {{element.description}} </span>
+            <span class="d-flex flex-row " *ngIf="element.description.length > msg">
+              {{element.description.substring(0,msg)}}...
+              <img (click)="openMsg(element.description)" src="./assets/msg.png"
+                class="mat-checkbox pb-4 has-text-dark fs-2 fw-bold font-bold" alt="Logo" width="22" height="20">
+            </span>
+
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="start">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Start Date
+          </th>
+          <td class="fw-bold {{color2}} text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">{{element.start}}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="isCompleted">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Task Status
+          </th>
+          <td class="fw-bold text-dark {{color2}} {{Task(element)}} pt-4 font-bold" mat-cell *matCellDef="let element">
+            <span class="{{col}} font-bold" mat-button mat-dialog-close>
+              {{task_status}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Extra Fields -->
+        <ng-container matColumnDef="due">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Due Date
+          </th>
+          <td class="fw-bold text-dark  {{color2}} {{onTag(element)}} pt-4 font-bold" mat-cell
+            *matCellDef="let element">
+            {{element.due}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tag">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Tag</th>
+          <td class="fw-bold {{color2}} {{tagcolor}}  pt-4  font-bold" mat-cell *matCellDef="let element">
+            {{element.tag}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Status</th>
+          <td class="fw-bold text-success {{color2}} fs-4 pt-4 font-bold" mat-cell *matCellDef="let element">
+            <img *ngIf="!element.isCompleted  && !element.progress" src="./assets/error.png" alt="Logo" width="20"
+              height="20">
+            <mat-icon *ngIf="element.isCompleted && !element.progress" class="mr-4"> check_circle </mat-icon>
+            <span *ngIf="element.progress && !element.isCompleted" class="icon has-text-link-dark mr-4  is-small">
+              <i class="fas fa-cog fa-spin"></i>
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Mark Tag -->
+        <ng-container matColumnDef="mark">
+          <th class="fw-bold has-background-dark pt-4  text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Unmark</th>
+          <td class="fw-bold {{color2}} text-success fs-6 pt-4  font-bold" mat-cell *matCellDef="let element">
+            <mat-checkbox [(ngModel)]="element.isCompleted" color="primary"
+              (click)="element.isCompleted == !element.isCompleted" (click)="check(element)"
+              class="fw-bold text-dark mr-4 font-bold" name="Mark"></mat-checkbox>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-button (click)="openAddDialog()" [color]="'primary'">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index">
+            <button mat-button [color]="'dark'" (click)="openUpdateDialog(row, true)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button [color]="'warn'" (click)="openDeleteDialog(row)">
+              <mat-icon class="mr-4">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr *matNoDataRow>
+          <td *ngIf="comp" class="mat-cell mt-6 fw-normal fs-6 py-2 text-center has-background-grey-lighter"
+            colspan="10">
+            No results found for this text - {{input.value}}
+          </td>
+        </tr>
+
+      </table>
+
+      <div *ngIf="comp == 0" class="mt-6 text-center has-background-grey-lighter">
+        <h3 class="fw-bold py-2 text-danger fs-4 font-bold "> No Completed Todos</h3>
+      </div>
+
+    </div>
+
+    <!-- In Progress Todos -->
+    <div *ngIf="code == -1" class="container col-12 mt-5">
+      <h3 class="button btn fw-bold text-dark is-warning bg-warning bg-gradient font-bold">In Progress Todos
+        <span class="icon mx-1 fs-5 has-text-link-dark is-small">
+          <i class="fas fa-cog fa-spin"></i>
+        </span>
+      </h3>
+      <table mat-table [dataSource]="dataSource4" class="  mat-elevation-z8 {{action}} demo-table">
+        <ng-container matColumnDef="title">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Title</th>
+          <td class="fw-bold {{color3}} text-dark pt-4  font-bold" mat-cell *matCellDef="let element">{{element.title}}
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Description
+          </th>
+          <td class="fw-bold {{color3}} text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">
+            <!-- {{element.description}} -->
+            <span *ngIf="element.description.length <= msg "> {{element.description}} </span>
+            <span class="d-flex flex-row " *ngIf="element.description.length > msg">
+              {{element.description.substring(0,msg)}}...
+              <img (click)="openMsg(element.description)" src="./assets/msg.png"
+                class="mat-checkbox pb-4 has-text-dark fs-2 fw-bold font-bold" alt="Logo" width="22" height="20">
+            </span>
+
+          </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="start">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Start Date
+          </th>
+          <td class="fw-bold {{color3}} text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">{{element.start}}
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="isCompleted">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+            *matHeaderCellDef>Task Status
+          </th>
+          <td class="fw-bold text-dark {{color3}} {{Task(element)}} pt-4 font-bold" mat-cell *matCellDef="let element">
+            <span class="{{col}} font-bold" mat-button mat-dialog-close>
+              {{task_status}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Extra Fields -->
+        <ng-container matColumnDef="due">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Due Date
+          </th>
+          <td class="fw-bold text-dark  {{color3}} {{onTag(element)}}  pt-4 font-bold" mat-cell
+            *matCellDef="let element">
+            {{element.due}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tag">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Tag</th>
+          <td class="fw-bold {{color3}} {{tagcolor}} pt-4 font-bold" mat-cell *matCellDef="let element">{{element.tag}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Status</th>
+          <td class="fw-bold text-success {{color3}} fs-4 pt-4 font-bold" mat-cell *matCellDef="let element">
+            <img *ngIf="!element.isCompleted && !element.progress" src="./assets/error.png" alt="Logo" width="20"
+              height="20">
+            <mat-icon *ngIf="element.isCompleted && !element.progress" class="mr-4"> check_circle </mat-icon>
+            <span *ngIf="element.progress && !element.isCompleted" class="icon mr-4 has-text-link-dark is-small">
+              <i class="fas fa-cog fa-spin"></i>
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Mark Tag -->
+        <ng-container matColumnDef="mark">
+          <th class="fw-bold has-background-dark pt-4  text-dark font-bold  has-text-success" mat-header-cell
+            *matHeaderCellDef>Unmark</th>
+          <td class="fw-bold {{color3}} text-success fs-6 pt-4  font-bold" mat-cell *matCellDef="let element">
+            <!-- <mat-checkbox [checked]="element.isCompleted" color="primary" class="fw-bold text-dark mr-4 font-bold"
+                (click)="check(element)" name="Mark"></mat-checkbox> -->
+            <mat-checkbox [(ngModel)]="element.isCompleted" color="primary"
+              (click)="element.isCompleted == !element.isCompleted" (click)="check(element)"
+              class="fw-bold text-dark mr-4 font-bold" name="Mark"></mat-checkbox>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-button (click)="openAddDialog()" [color]="'primary'">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row; let i = index">
+            <button mat-button [color]="'dark'" (click)="openUpdateDialog(row, true)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button [color]="'warn'" (click)="openDeleteDialog(row)">
+              <mat-icon class="mr-4">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Show this message if No Data Found By Search Bar -->
+        <tr *matNoDataRow>
+          <td *ngIf="prog" class="mat-cell mt-6 fw-normal fs-6 py-2 text-center has-background-grey-lighter"
+            colspan="10">
+            No results found for this text - {{input.value}}
+          </td>
+        </tr>
+
+      </table>
+
+      <div *ngIf="prog == 0" class="mt-6 text-center has-background-grey-lighter">
+        <h3 class="fw-bold py-2 text-danger fs-4 font-bold "> No Progress Todos</h3>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Filter Todos -->
+  <div *ngIf="code != -1" class="container col-12 mt-5">
+    <h3 class=" button {{logo}} {{text}} fw-bold text-dark font-bold"> {{tag}} </h3>
+    <table mat-table [dataSource]="dataSource3" class="mat-elevation-z8 {{action}} demo-table">
+      <ng-container matColumnDef="title">
+        <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+          *matHeaderCellDef>Title</th>
+        <td class="{{bag}}  fw-bold text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">{{element.title}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="description">
+        <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+          *matHeaderCellDef>Description
+        </th>
+        <td class="fw-bold {{bag}} text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">
+          <!-- {{element.description}} -->
+          <span *ngIf="element.description.length <= msg "> {{element.description}} </span>
+          <span class="d-flex flex-row " *ngIf="element.description.length > msg">
+            {{element.description.substring(0,msg)}}...
+            <img (click)="openMsg(element.description)" src="./assets/msg.png"
+              class="mat-checkbox pb-4 has-text-dark fs-2 fw-bold font-bold" alt="Logo" width="22" height="20">
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="start">
+        <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+          *matHeaderCellDef>Start Date
+        </th>
+        <td class="fw-bold {{bag}} text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">{{element.start}}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="isCompleted">
+        <th class="fw-bold has-background-dark pt-4 text-dark font-bold has-text-success" mat-header-cell
+          *matHeaderCellDef>Task Status
+        </th>
+        <td class="fw-bold {{bag}} text-dark {{Task(element)}} pt-4 font-bold" mat-cell *matCellDef="let element">
+          <span class="{{col}} font-bold" mat-button mat-dialog-close>
+            {{task_status}}</span>
+        </td>
+      </ng-container>
+
+      <!-- Extra Fields -->
+      <ng-container matColumnDef="due">
+        <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+          *matHeaderCellDef>Due Date
+        </th>
+        <td class="fw-bold {{bag}} text-dark  pt-4 font-bold" mat-cell *matCellDef="let element">{{element.due}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="tag">
+        <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+          *matHeaderCellDef>Tag</th>
+        <td class="fw-bold {{bag}} pt-4 font-bold {{onTag(element)}} " mat-cell *matCellDef="let element">
+          <span *ngIf="code" class="font-bold {{tagc}}" mat-button mat-dialog-close>
+            {{element.tag}} </span>
+          <span *ngIf="!code" class="font-bold {{tagcolor}}" mat-button mat-dialog-close>
+            {{element.tag}} </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th class="fw-bold has-background-dark pt-4 text-dark font-bold  has-text-success" mat-header-cell
+          *matHeaderCellDef>Status</th>
+        <td class="fw-bold {{bag}} text-success fs-4 pt-4 font-bold" mat-cell *matCellDef="let element">
+          <img *ngIf="!element.isCompleted && !element.progress" src="./assets/error.png" alt="Logo" width="20"
+            height="20">
+          <mat-icon *ngIf="element.isCompleted && !element.progress" class="mr-4"> check_circle </mat-icon>
+          <span *ngIf="element.progress && !element.isCompleted" class="icon mr-4 has-text-link-dark is-small">
+            <i class="fas fa-cog fa-spin"></i>
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Mark Tag -->
+      <ng-container matColumnDef="mark">
+        <th class="fw-bold has-background-dark pt-4  text-dark font-bold  has-text-success" mat-header-cell
+          *matHeaderCellDef>Mark</th>
+        <td class="fw-bold {{bag}} text-success fs-6 pt-4  font-bold" mat-cell *matCellDef="let element">
+          <mat-checkbox [(ngModel)]="element.isCompleted" color="primary"
+            (click)="element.isCompleted == !element.isCompleted" class="fw-bold text-dark mr-4 font-bold"
+            (click)="check(element)" name="Mark"></mat-checkbox>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-button (click)="openAddDialog()" [color]="'primary'">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index">
+          <button mat-button [color]="'dark'" (click)="openUpdateDialog(row, true)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-button [color]="'warn'" (click)="openDeleteDialog(row)">
+            <mat-icon class="mr-4">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Show this message if No Data Found By Search Bar -->
+      <tr *matNoDataRow>
+        <td *ngIf="len" class="mat-cell mt-6 fw-normal fs-6 py-2 text-center has-background-grey-lighter" colspan="10">
+          No results found for this text - {{input.value}}
+        </td>
+      </tr>
+
+    </table>
+
+    <div *ngIf="len == 0" class="mt-6 text-center has-background-grey-lighter">
+      <h3 class="fw-bold py-2 text-danger fs-4 font-bold "> Todo List - Empty</h3>
+    </div>
+
+  </div>
+</div>

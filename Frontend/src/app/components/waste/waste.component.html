@@ -1,0 +1,121 @@
+<p> waste Material </p>
+
+<!-- Login Page -->
+
+
+<!-- <div class="container mt-5">
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title class="title fw-bold font-bold has-text-success ">Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+          <form class="example-form" novalidate #form="ngForm">
+            <mat-form-field class="example-full-width">
+              <mat-label class="fw-bold text-dark font-bold">Username</mat-label>
+              <input class="fw-normal text-dark font-bold" matInput placeholder="Username" name="username"
+                [(ngModel)]="formValues.username" #username="ngModel" required>
+              <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+                Username is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label class="fw-bold text-dark font-bold">Password</mat-label>
+              <input class="fw-normal text-dark font-bold" matInput [type]="hide ? 'password' : 'text'" name="password"
+                [(ngModel)]="formValues.password" #password="ngModel" required>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </form>
+          <mat-error *ngIf="errorMessage">
+            {{ errorMessage }}
+          </mat-error>
+        </mat-card-content>
+        <mat-card-actions>
+          <button class="button btn btn-sm is-success fw-bold font-bold has-text-dark" mat-button type="button"
+            (click)="onClickLogin()">Login</button>
+        </mat-card-actions>
+
+        <p class="fw-bold text-dark font-bold has-text-grey"> Not got an account? <a class="has-text-primary"
+            routerLink="/register">Sign up</a> now!</p>
+      </mat-card>
+    </div>
+  </div>
+</div>
+ -->
+
+
+<!-- Sign Up Page -->
+ 
+<!-- 
+ <div class="container mt-5">
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title class="title  font-bold fw-bold has-text-success ">Sign Up</mat-card-title>
+
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+          <form class="example-form" #form="ngForm" novalidate>
+            <mat-form-field class="example-full-width">
+              <mat-label class="fw-bold text-dark font-bold">Username</mat-label>
+              <input class="fw-normal text-dark font-normal" matInput placeholder="Username" name="username"
+                [(ngModel)]="formValues.username" #username="ngModel" required>
+              <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+                Username is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label class="fw-bold text-dark font-bold">Create your password</mat-label>
+              <input class="fw-normal text-dark font-normal" matInput [type]="hide ? 'password' : 'text'"
+                name="password" [(ngModel)]="formValues.password" #password="ngModel" required>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label class="fw-bold text-dark font-bold">Confirm your password</mat-label>
+              <input class="fw-normal text-dark font-normal" matInput [type]="hide ? 'password' : 'text'"
+                name="confirmPassword" [(ngModel)]="formValues.confirmPassword" #confirmPassword="ngModel" required>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                Confirm Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label class="fw-bold text-dark font-bold">Email</mat-label>
+              <input class="fw-normal text-dark font-normal" matInput type="email" placeholder="Email" name="email"
+                [(ngModel)]="formValues.email" #email="ngModel">
+            </mat-form-field>
+            <mat-error *ngIf="errorMessage">
+              {{ errorMessage }}
+            </mat-error>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button class="button btn-sm fw-bold font-bold is-success has-text-dark" mat-button type="button"
+            (click)="onClickRegister()">Sign Up</button>
+        </mat-card-actions>
+        <p class="fw-bold text-dark font-bold has-text-grey">Already got an account? <a class="has-text-primary"
+            routerLink="/login">Login</a> now!</p>
+      </mat-card>
+    </div>
+  </div>
+</div> -->
+
+
+

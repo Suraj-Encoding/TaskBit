@@ -1,0 +1,38 @@
+<mat-toolbar class="has-background-dark">
+    <p *ngIf="isLog" class="navbar-brand fw-bolder my-3 d-flex flex-row" routerLink="/">
+        <a class="mx-2">
+            <img src="./assets/note.png" alt="Logo" width="40" height="40">
+        </a>
+        <!-- <a class="has-text-grey-lighter mt-1"> i</a>
+        <a class="has-text-warning mt-1 "> N</a>
+        <a class="has-text-primary mt-1 "> ote</a>
+        <a class="has-text-warning mt-1 ">B</a>
+        <a class="has-text-primary mt-1 "> ook</a> -->
+
+        <a class="has-text-warning mt-1 "> T</a>
+        <a class="has-text-primary mt-1 "> ask</a>
+        <a class="has-text-warning mt-1 ">B</a>
+        <a class="has-text-primary mt-1 "> it</a>
+        <app-child></app-child>
+
+    </p>
+
+    <a *ngIf="isHome" class="navbar-brand mx-3 text-dark fw-bold d-inline-block align-text-top" routerLink="/">
+        <img src="./assets/usr.jpg" alt="Logo" width="30" height="30">
+    </a>
+
+
+
+    <span class="example-spacer"></span>
+
+    <!-- <form *ngIf="isLog" class="d-flex">
+        <button class="button is-info text-white fw-bold bg-gradient mx-2" routerLink="/login"> Login </button>
+        <button class="button is-info text-white  fw-bold bg-gradient mx-2" routerLink="/register"> Signup</button>
+    </form> -->
+
+    <a (click)="logout()" *ngIf="isHome" class="navbar-brand mx-3 text-dark fw-bold d-inline-block align-text-top"
+        type="button" aria-label="Example icon-button with share icon">
+        <img src="./assets/shutdown.png" alt="Logo" width="30" height="30">
+        <!-- <button class="button is-info text-white fw-bold bg-gradient mx-2"> Logout </button> -->
+    </a>
+</mat-toolbar>

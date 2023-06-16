@@ -1,0 +1,10 @@
+<h2 class="fw-bold text-dark font-bold has-text-primary" mat-dialog-title>Delete Todo</h2>
+<mat-dialog-content class="mat-typography fw-bold font-bold text-dark">
+  Are you sure you want to delete this todo ?
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+  <button class="button btn px-2 text-black is-success font-bold btn-sm " mat-button mat-dialog-close>Cancel</button>
+  <button mat-button class="button btn text-black px-2 is-success font-bold btn-sm"
+    (click)="onClickDelete()">Yes</button>
+</mat-dialog-actions>

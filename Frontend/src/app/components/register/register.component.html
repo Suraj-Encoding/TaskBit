@@ -1,0 +1,103 @@
+<div class="form centered-content">
+  <div class="white-box">
+
+    <h1 class="title fw-bold font-bold has-text-primary">Sign up</h1>
+
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input fw-bold font-bold has-background-light" type="email" placeholder="Email"
+          [(ngModel)]="formValues.email" #email="ngModel" required>
+        <mat-error class="has-text-danger-dark fw-normal font-normal"
+          *ngIf="email.invalid && (email.dirty || email.touched)">
+          Email is <strong>required</strong>
+        </mat-error>
+        <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+        </span>
+      </p>
+    </div>
+
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input fw-bold font-bold has-background-light" type="text" placeholder="Name"
+          [(ngModel)]="formValues.name" #name="ngModel" required>
+        <mat-error class="has-text-danger-dark fw-normal font-normal"
+          *ngIf="name.invalid && (name.dirty || name.touched)">
+          Name is <strong>required</strong>
+        </mat-error>
+        <span class="icon is-small is-left">
+          <i class="fas fa-user-circle"></i>
+        </span>
+      </p>
+    </div>
+
+
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input fw-bold font-bold has-background-light" type="text" placeholder="Enter your pet name"
+          [(ngModel)]="formValues.pet" #pet="ngModel" required>
+        <mat-error class="has-text-danger-dark fw-normal font-normal"
+          *ngIf="pet.invalid && (pet.dirty || pet.touched)">
+          Pet name is <strong>required</strong>
+        </mat-error>
+        <span class="icon is-small is-left">
+          <i class="fas fa-dog"></i>
+        </span>
+      </p>
+    </div>
+
+
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <a class="d-flex has-background-ligh flex-row">
+          <input class="input fw-bold font-bold has-background-light" [type]="hide1 ? 'password' : 'text'"
+            type="password" placeholder="Password" [(ngModel)]="formValues.password" #password="ngModel" required>
+          <button class="button is-small {{btn1}} {{color1}}" (click)="changecolor1()" mat-icon-button matSuffix
+            (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+            <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </a>
+        <mat-error class="has-text-danger-dark fw-normal font-normal"
+          *ngIf="password.invalid && (password.dirty || password.touched)">
+          Password is <strong>required</strong>
+        </mat-error>
+      </p>
+
+      <p class="control has-icons-left ">
+        <a class="d-flex has-background-ligh flex-row">
+          <input class="input fw-bold font-bold has-background-light" [type]="hide2 ? 'password' : 'text'"
+            type="password" placeholder="Confirm Password" [(ngModel)]="formValues.confirmPassword"
+            #confirmPassword="ngModel" required>
+          <button class="button is-small {{btn2}} {{color2}}"  (click)="changecolor2()" mat-icon-button matSuffix
+            (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </a>
+        <mat-error class="has-text-danger-dark fw-normal font-normal"
+          *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+          Confirm Password is <strong>required</strong>
+        </mat-error>
+      </p>
+
+      <mat-error class="has-text-danger-dark fw-bold" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </mat-error>
+
+    </div>
+    <div class="field" style="display: flex; justify-content: flex-end;">
+      <p class="control">
+        <button class="button is-success fw-bold font-bold has-text-dark" (click)="onClickRegister()">
+          Sign up
+        </button>
+      </p>
+    </div>
+    <p class="fw-bold has-text-grey font-bold">Already got an account? <a routerLink="/login">Login</a> now!</p>
+
+  </div>
+</div>

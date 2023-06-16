@@ -1,0 +1,81 @@
+<h2 class="fw-bold text-dark font-bold has-text-primary" mat-dialog-title>Add Todo</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="example-form" #form="ngForm" novalidate>
+    <mat-form-field class="example-full-width">
+      <mat-label class="fw-bold text-dark  font-bold">Title</mat-label>
+      <input class="fw-normal text-dark font-bold" matInput placeholder="title" name="title"
+        [(ngModel)]="formValues.title" #title="ngModel" required>
+      <mat-error *ngIf="title.invalid && (title.dirty || title.touched)">
+        title is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label class="fw-bold text-dark  font-bold">Description</mat-label>
+      <textarea class="fw-normal text-dark font-bold " matInput placeholder="description" name="description"
+        [(ngModel)]="formValues.description" #description="ngModel"></textarea>
+    </mat-form-field>
+
+    <!-- Extra Fields -->
+
+    <mat-form-field class="example-form">
+      <mat-label class="fw-bold text-dark  font-bold">Start Date</mat-label>
+      <input class="fw-normal text-dark font-bold" type="date" matInput placeholder="start date" name="start"
+        [(ngModel)]="formValues.start" #start="ngModel">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field class="example-form">
+      <mat-label class="fw-bold text-dark  font-bold">Due Date</mat-label>
+      <input class="fw-normal text-dark font-bold" type="date" matInput placeholder="due date" name="due"
+        [(ngModel)]="formValues.due" #due="ngModel">
+    </mat-form-field>
+
+    <!-- <mat-form-field class="example-full-width">
+      <mat-label class="fw-bold text-dark  font-bold">Due Date</mat-label>
+      <input class="fw-normal text-dark font-bold" type matInput placeholder="due date" name="due"
+        [(ngModel)]="formValues.due" #due="ngModel">
+    </mat-form-field> -->
+
+    <!-- <mat-form-field class="example-full-width">
+      <mat-label class="fw-bold text-dark  font-bold">Tag</mat-label>
+      <input class="fw-normal text-dark font-bold" matInput placeholder="tag" name="tag" [(ngModel)]="formValues.tag"
+        #tag="ngModel">
+    </mat-form-field> -->
+
+    <!-- <div class="mb-3">
+      <mat-label class="fw-bold text-dark mr-3 font-bold">Tag</mat-label>
+      <select type="text" class="fw-normal text-dark font-bold" matInput placeholder="tag" name="tag"
+        [(ngModel)]="formValues.tag">
+        <option> Important </option>
+        <option> Urgent </option>
+        <option> Important & Urgent </option>
+        <option> Today </option>
+        <option> Nothing </option>
+      </select>
+    </div> -->
+
+    <div class="mb-3">
+      <mat-form-field>
+        <mat-label class="fw-bold text-dark font-bold ">Select a tag</mat-label>
+        <mat-select class="fw-normal text-dark font-bold" matInput placeholder="tag" name="tag"
+          [(ngModel)]="formValues.tag" #tag="ngModel">
+          <mat-option value="Urgent">Urgent 🟣</mat-option>
+          <mat-option value="Important">Important 🟢 </mat-option>
+          <mat-option value="Today">Today 🔵</mat-option>
+          <mat-option value="Urgent & Important">Urgent & Important 🔴</mat-option>
+          <mat-option value="Nothing">Nothing 🟡</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+
+  <button class="button btn px-2 text-dark is-success font-bold btn-sm " mat-button mat-dialog-close>Cancel</button>
+  <button class="button btn text-dark px-2 is-success font-bold btn-sm" mat-button [mat-dialog-close]="true"
+    cdkFocusInitial [disabled]="!form.form.valid" (click)="onClickAdd()">Add
+    Todo</button>
+</mat-dialog-actions>

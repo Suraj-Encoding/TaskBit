@@ -1,0 +1,29 @@
+// .example-form {
+//   min-width: 150px;
+//   max-width: 500px;
+//   width: 100%;
+// }
+
+// .example-full-width {
+//   width: 100%;
+// }
+
+// .container {
+//   min-height: 77vh;
+//   margin: 40px auto;
+// }
+
+// # Login CSS
+$turquoise: #44ddd0;
+$green: #27d7a1;
+$light-green: #45f69e;
+$dark-green: rgb(0, 100, 80);
+$light: #f8f8f8;
+
+.form {
+  background: linear-gradient(to right top , $turquoise, $green);
+}
+
+// .form {
+//     background-image: url("/assets/todo.jpg");
+// }

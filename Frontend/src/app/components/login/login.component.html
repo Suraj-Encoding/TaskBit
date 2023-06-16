@@ -1,0 +1,59 @@
+<div class="form centered-content">
+  <div class="white-box">
+
+    <h1 class="title fw-bold font-bold has-text-success ">Login</h1>
+
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input fw-bold font-bold has-background-light" type="email" placeholder="Email"
+          [(ngModel)]="formValues.email" #email="ngModel" required>
+        <mat-error class="has-text-danger-dark fw-normal font-normal"
+          *ngIf="email.invalid && (email.dirty || email.touched)">
+          Email is <strong>required</strong>
+        </mat-error>
+        <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <a class="d-flex has-background-ligh flex-row">
+
+          <input class="input fw-bold font-bold has-background-light" [type]="hide ? 'password' : 'text'"
+            type="password" placeholder="Password" [(ngModel)]="formValues.password" #password="ngModel" required>
+
+          <button class="button is-small {{btn}} {{color}}" (click)="changecolor()" mat-icon-button matSuffix
+            (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </a>
+        <mat-error class="has-text-danger-dark fw-normal font-normal"
+          *ngIf="password.invalid && (password.dirty || password.touched)">
+          Password is <strong>required</strong>
+        </mat-error>
+      </p>
+
+      <mat-error class="has-text-danger-dark fw-bold" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </mat-error>
+    </div>
+
+
+    <a class="fw-bold " routerLink="/forget">Forget Password?</a>
+
+    <div class="field" style="display: flex; justify-content: flex-end;">
+      <p class="control">
+        <button class="button is-success fw-bold font-bold has-text-dark" (click)="onClickLogin()">
+          Login
+        </button>
+      </p>
+    </div>
+    <!-- <p class="fw-bold has-text-white font-bold">Not got an account? <a routerLink="/register">Sign up</a> now!</p> -->
+    <p class="fw-bold has-text-grey font-bold">Not got an account? <a routerLink="/register">Sign up</a> now!</p>
+
+  </div>
+</div>
